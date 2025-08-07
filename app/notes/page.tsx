@@ -16,3 +16,12 @@ import App from './Notes.client';
 export default function NotesPage() {
   return <App />;
 }
+
+// import { fetchNotes } from '@/lib/api';
+// import Notes from './Notes.client';
+
+// export default async function NotesPage() {
+//   const { notes, total } = await fetchNotes();
+
+//   return <Notes initialNotes={notes} total={total} />;
+// }
