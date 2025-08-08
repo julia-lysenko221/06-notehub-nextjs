@@ -5,8 +5,6 @@ import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { useDebounce } from 'use-debounce';
 
 import css from '../page.module.css';
-// import ErrorMessage from '../ErrorMessage/ErrorMessage';
-// import Loader from '../Loader/Loader';
 import Modal from '@/components/Modal/Modal';
 import NoteForm from '@/components/NoteForm/NoteForm';
 import NoteList from '@/components/NoteList/NoteList';
@@ -21,7 +19,11 @@ export interface FetchNotesResponse {
   totalPages: number;
 }
 
-export default function App() {
+interface NotesClientProps {
+  initialData: FetchNotesResponse;
+}
+
+export default function NotesClient({ initialData }: NotesClientProps) {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -37,6 +39,7 @@ export default function App() {
     queryFn: () => fetchNotes(page, perPage, debouncedSearch),
 
     placeholderData: keepPreviousData,
+    initialData,
   });
 
   const openModal = () => setModalOpen(true);
@@ -65,9 +68,6 @@ export default function App() {
           Create note +
         </button>
       </header>
-
-      {/* {isLoading && <Loader />}
-      {isError && <ErrorMessage />} */}
 
       {data && data.notes.length > 0 && <NoteList notes={data.notes} />}
 
